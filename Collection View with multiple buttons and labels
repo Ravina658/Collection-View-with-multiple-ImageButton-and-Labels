@@ -1,0 +1,72 @@
+import UIKit
+
+class menuVC: UIViewController {
+override func viewDidLoad() {
+super.viewDidLoad()
+}
+}
+// Here we can create a array of images and labels for four different button and labels in collection view
+var arrOfImages = ["1" , "2" , "3" , "4"]
+var arrOfLabels = ["Sight Words" , "Spellers" , "Parent Setup" , "Store"]
+
+// Now we extend the class menuVC for the functionality
+extension menuVC: UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
+
+// Now we create a function in which it create the same no. of butto as of of array because we use .count here
+   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+     return arrOfImages.count
+     }
+
+/* Now in this we pass different images and labels to the buttons and here menuCellID is the identifier 
+and menuCollectionViewCell is the class */
+func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "menuCellID", for: indexPath) as! menuCollectionViewCell
+ cell.imgViewCollection.image = UIImage(named: arrOfImages[indexPath.row])
+ cell.labelViewCollection.text = arrOfLabels[indexPath.item]
+ return cell
+ }
+
+// In this function we give width and height to the cell  
+func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
+  let cellWidth = collectionView.frame.width - 90
+  let cellHeight = collectionView.frame.height - 70
+return CGSize(width: cellWidth/4, height: cellHeight)
+ }
+
+// In this function we give top,bottom,left.right to the edges of the cell
+   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets{
+   return UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+   }
+
+   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat{
+   return 4
+   }
+        
+  */ In this function we use switch statement with four case's and one default case for the cell in collection for giving 
+  the navigation to the buttons, by clicking on the button the new View Controller will open like in case0 by clicking 
+  the first button the animalDisplayVC will open */
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
+  switch indexPath.item {
+
+    case 0:
+    let newViewController = storyboard!.instantiateViewController(withIdentifier: "animalDisplayVC") as! animalDisplayVC
+    self.navigationController?.pushViewController(newViewController, animated: true)
+
+    case 1:
+    let newViewController = storyboard!.instantiateViewController(withIdentifier: "wordScreenVC") as!  wordScreenVC
+    self.navigationController?.pushViewController(newViewController, animated: true)
+
+    case 2:
+    let newViewController = storyboard!.instantiateViewController(withIdentifier: "lockVC") as!  lockVC
+    self.navigationController?.pushViewController(newViewController, animated: true)
+    
+    case 3:
+    let newViewController = storyboard!.instantiateViewController(withIdentifier: "settingVC") as!  settingVC
+    self.navigationController?.pushViewController(newViewController, animated: true)
+
+    default:
+    break
+    }
+  }
+}
+
